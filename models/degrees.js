@@ -1,30 +1,26 @@
 const Sequelize = require('sequelize');
 
 const sequelize = require('../util/database');
+const Users = require('./users');
 
-const User = sequelize.define('user', {
+const Degrees = sequelize.define('Degrees', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
-  name: {
+  degree_name: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  username: {
+  specialization: {
     type: Sequelize.STRING,
-    allowNull: false,
-  },
-  password: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  authorization_level: {
-    type: Sequelize.ENUM('1', '2'),
     allowNull: false,
   },
 });
 
-module.exports = User;
+Degrees.belongsTo(Users, { foreignKey: 'user_id' });
+Users.hasMany(Degrees, { foreignKey: 'user_id' });
+
+module.exports = Degrees;

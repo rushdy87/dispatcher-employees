@@ -1,7 +1,9 @@
 const express = require('express');
 
 const sequelize = require('./util/database');
-const User = require('./models/user');
+const Users = require('./models/users');
+const JobTitles = require('./models/job-titles');
+const Degrees = require('./models/degrees');
 
 const employeesRoutes = require('./routes/employees');
 
@@ -11,18 +13,28 @@ const app = express();
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+  Users.findByPk(1)
+    .then((user) => {
+      req.user = user;
+      console.log(user.dataValues);
+      next();
+    })
+    .catch((err) => console.log(err));
+});
+
 app.use('/employees', employeesRoutes);
 
 sequelize
   // .sync({ force: true })
   .sync()
   .then((result) => {
-    return User.findByPk(1);
+    return Users.findByPk(1);
     // console.log(result);
   })
   .then((user) => {
     if (!user) {
-      return User.create({
+      return Users.create({
         name: 'Super',
         username: 'super',
         password: 'super',
