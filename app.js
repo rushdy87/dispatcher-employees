@@ -4,6 +4,7 @@ const sequelize = require('./util/database');
 const Users = require('./models/users');
 const JobTitles = require('./models/job-titles');
 const Degrees = require('./models/degrees');
+const Employees = require('./models/employees');
 
 const employeesRoutes = require('./routes/employees');
 
@@ -17,7 +18,7 @@ app.use((req, res, next) => {
   Users.findByPk(1)
     .then((user) => {
       req.user = user;
-      console.log(user.dataValues);
+      // console.log(user.dataValues);
       next();
     })
     .catch((err) => console.log(err));
