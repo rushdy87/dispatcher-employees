@@ -27,12 +27,12 @@ exports.getEmployeeById = async (req, res, next) => {
     }
 
     const [degree, jobTitle] = await Promise.all([
-      Degrees.findByPk(employee.specialist_degree),
+      Degrees.findByPk(employee.degree),
       JobTitles.findByPk(employee.job_title),
     ]);
 
     if (degree) {
-      employee.specialist_degree = `${degree.degree_name} - ${degree.specialization}`;
+      employee.degree = degree.degree_name;
     }
     if (jobTitle) {
       employee.job_title = jobTitle.title_name;
@@ -72,12 +72,12 @@ exports.fetchAll = async (req, res, next) => {
     const processedEmployees = await Promise.all(
       employees.map(async (employee) => {
         const [degree, jobTitle] = await Promise.all([
-          Degrees.findByPk(employee.specialist_degree),
+          Degrees.findByPk(employee.degree),
           JobTitles.findByPk(employee.job_title),
         ]);
 
         if (degree) {
-          employee.specialist_degree = `${degree.degree_name} - ${degree.specialization}`;
+          employee.degree = degree.degree_name;
         }
         if (jobTitle) {
           employee.job_title = jobTitle.title_name;
@@ -88,6 +88,67 @@ exports.fetchAll = async (req, res, next) => {
     );
 
     return handleResponse(res, null, processedEmployees);
+  } catch (error) {
+    return handleResponse(res, error);
+  }
+};
+
+// Update employee
+exports.updateEmployee = async (req, res, next) => {
+  try {
+    const employeeId = req.params.id;
+    const { employeeData } = req.body;
+
+    // Try to find the employee by ID
+    let employee = await Employees.findByPk(employeeId);
+
+    if (!employee) {
+      // If the employee doesn't exist, create a new one with the provided data
+      employee = await Employees.create(employeeData);
+    } else {
+      // If the employee exists, update their data
+      await Employees.update(employeeData, {
+        where: {
+          id: employee.id,
+        },
+      });
+      // Fetch the updated employee data after the update
+      employee = await Employees.findByPk(employeeId);
+    }
+
+    // Check if the update or creation was successful
+    if (!employee) {
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+
+    return handleResponse(res, null, { message: 'Employee was updated' });
+  } catch (error) {
+    return handleResponse(res, error);
+  }
+};
+
+// Delete an employee
+exports.removeEmployee = async (req, res, next) => {
+  try {
+    const employeeId = req.params.id;
+    let employee = await Employees.findByPk(employeeId);
+
+    if (!employee) {
+      return res.status(404).json({ error: 'Employee not found' });
+    }
+
+    // Try to delete the employee by their ID
+    const deletionResult = await Employees.destroy({
+      where: { id: employeeId },
+    });
+
+    if (deletionResult === 1) {
+      // The deletion was successful (1 row affected)
+      return handleResponse(res, null, { message: 'Employee was deleted' });
+    } else {
+      // The deletion did not affect any rows (employee not found)
+      return res.status(404).json({ error: 'Employee not found' });
+    }
   } catch (error) {
     return handleResponse(res, error);
   }

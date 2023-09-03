@@ -18,6 +18,7 @@ const Employees = sequelize.define('Employees', {
   status: Sequelize.ENUM('ملاك', 'عقد'),
   workday: Sequelize.ENUM('صباحي', 'مناوب'),
   unit: Sequelize.STRING,
+  specialist_degree: Sequelize.STRING,
   joining_date: Sequelize.DATE,
   phone_number: Sequelize.STRING,
   birthdate: Sequelize.DATE,
@@ -30,6 +31,6 @@ Users.hasMany(Employees, { foreignKey: 'user_id' });
 
 Employees.belongsTo(JobTitles, { foreignKey: 'job_title' });
 
-Employees.belongsTo(Degrees, { foreignKey: 'specialist_degree' });
+Employees.belongsTo(Degrees, { foreignKey: 'degree' });
 
 module.exports = Employees;
