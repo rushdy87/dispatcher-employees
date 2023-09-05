@@ -19,9 +19,9 @@ const Employees = sequelize.define('Employees', {
   workday: Sequelize.ENUM('صباحي', 'مناوب'),
   unit: Sequelize.STRING,
   specialist_degree: Sequelize.STRING,
-  joining_date: Sequelize.DATE,
+  joining_date: Sequelize.DATEONLY,
   phone_number: Sequelize.STRING,
-  birthdate: Sequelize.DATE,
+  birthdate: Sequelize.DATEONLY,
   address: Sequelize.STRING,
   gender: Sequelize.ENUM('ذكر', 'أنثى'),
 });
