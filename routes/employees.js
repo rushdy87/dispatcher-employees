@@ -13,6 +13,9 @@ route.post('/newEmployees', employeesController.createEmployee);
 // GET /employees
 route.get('/', employeesController.fetchAll);
 
+// GET /employees/:name
+route.get('/name/:name', employeesController.getEmployeesByName);
+
 // PATCH /employees/:id
 route.patch('/:id', employeesController.updateEmployee);
 

@@ -1,3 +1,5 @@
+const { Op } = require('sequelize');
+
 const Employees = require('../models/employees');
 const Degrees = require('../models/degrees');
 const JobTitles = require('../models/job-titles');
@@ -16,6 +18,29 @@ function handleResponse(
   return res.status(200).json(successData);
 }
 
+// Helper function to process employees
+const processEmployees = async (employees) => {
+  const processedEmployees = await Promise.all(
+    employees.map(async (employee) => {
+      const [degree, jobTitle] = await Promise.all([
+        Degrees.findByPk(employee.degree),
+        JobTitles.findByPk(employee.job_title),
+      ]);
+
+      if (degree) {
+        employee.degree = degree.degree_name;
+      }
+      if (jobTitle) {
+        employee.job_title = jobTitle.title_name;
+      }
+
+      return employee;
+    })
+  );
+
+  return processedEmployees;
+};
+
 // Get employee by ID
 exports.getEmployeeById = async (req, res, next) => {
   try {
@@ -26,19 +51,9 @@ exports.getEmployeeById = async (req, res, next) => {
       return res.status(404).json({ error: 'Employee not found' });
     }
 
-    const [degree, jobTitle] = await Promise.all([
-      Degrees.findByPk(employee.degree),
-      JobTitles.findByPk(employee.job_title),
-    ]);
+    const processedEmployees = await processEmployees([employee]);
 
-    if (degree) {
-      employee.degree = degree.degree_name;
-    }
-    if (jobTitle) {
-      employee.job_title = jobTitle.title_name;
-    }
-
-    return handleResponse(res, null, employee);
+    return handleResponse(res, null, processedEmployees);
   } catch (error) {
     return handleResponse(res, error);
   }
@@ -69,23 +84,28 @@ exports.fetchAll = async (req, res, next) => {
       return res.status(404).json({ error: 'No Employee found' });
     }
 
-    const processedEmployees = await Promise.all(
-      employees.map(async (employee) => {
-        const [degree, jobTitle] = await Promise.all([
-          Degrees.findByPk(employee.degree),
-          JobTitles.findByPk(employee.job_title),
-        ]);
+    const processedEmployees = await processEmployees(employees);
 
-        if (degree) {
-          employee.degree = degree.degree_name;
-        }
-        if (jobTitle) {
-          employee.job_title = jobTitle.title_name;
-        }
+    return handleResponse(res, null, processedEmployees);
+  } catch (error) {
+    return handleResponse(res, error);
+  }
+};
 
-        return employee;
-      })
-    );
+// Get employees by Name
+exports.getEmployeesByName = async (req, res, next) => {
+  try {
+    const employeeName = req.params.name;
+    console.log(employeeName);
+    const employees = await Employees.findAll({
+      where: { name: { [Op.like]: `%${employeeName}%` } },
+    });
+
+    if (employees.length === 0) {
+      return res.status(404).json({ error: 'No Employee found' });
+    }
+
+    const processedEmployees = await processEmployees(employees);
 
     return handleResponse(res, null, processedEmployees);
   } catch (error) {
