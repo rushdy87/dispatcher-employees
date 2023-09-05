@@ -9,7 +9,18 @@ const Employees = () => {
   const [employees, setEmployees] = useState([]);
   const [filteredEmployees, setFilteredEmployees] = useState([]);
   const [addEmployees, setAddEmployees] = useState(false);
-
+  const [columns, setColumns] = useState({
+    id: { value: true, ar: 'رقم الحاسبة' },
+    name: { value: true, ar: 'الاسم' },
+    job_title: { value: true, ar: 'العنوان الوظيفي' },
+    degree: { value: false, ar: 'التحصيل الدراسي' },
+    status: { value: true, ar: 'الحالة الوظيفية' },
+    workday: { value: false, ar: 'نوع الدوام' },
+    joining_date: { value: false, ar: 'تاريخ المباشرة' },
+    phone_number: { value: false, ar: 'رقم الهاتف' },
+    birthdate: { value: false, ar: 'تاريخ الميلاد' },
+    address: { value: false, ar: 'العنوان' },
+  });
   useEffect(() => {
     axios
       .get('http://localhost:3030/employees')
@@ -31,12 +42,14 @@ const Employees = () => {
           <FindEmployee
             employees={employees}
             setFilteredEmployees={setFilteredEmployees}
+            columns={columns}
+            setColumns={setColumns}
           />
           <div className='employees-table'>
             <button onClick={() => setAddEmployees(true)}>
               اضفافة موظف جديد
             </button>
-            <EmployeesTable employees={filteredEmployees} />
+            <EmployeesTable columns={columns} employees={filteredEmployees} />
           </div>
         </>
       )}

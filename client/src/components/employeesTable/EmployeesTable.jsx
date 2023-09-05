@@ -1,26 +1,31 @@
 import './EmployeesTable.css';
-const EmployeesTable = ({ employees }) => {
+
+const EmployeesTable = ({ columns, employees }) => {
+  const renderHeader = Object.keys(columns).map((key) => {
+    if (columns[key].value) {
+      return <th key={key}>{columns[key].ar}</th>;
+    }
+    return null;
+  });
+
   const renderEmployess = employees.map((employee) => {
     return (
       <tr key={employee.id}>
-        <td>{employee.id}</td>
-        <td>{employee.name}</td>
-        <td>{employee.job_title}</td>
-        <td>{employee.status}</td>
+        {Object.keys(columns).map((key) => {
+          if (columns[key].value) {
+            return <td key={key}>{employee[key]}</td>;
+          }
+          return null;
+        })}
       </tr>
     );
   });
 
   return (
-    <div>
+    <div className='table_container'>
       <table>
         <thead>
-          <tr>
-            <th>رقم الحاسبة</th>
-            <th>الاسم</th>
-            <th>العنوان الوظيفي</th>
-            <th>الحالة الوظيفية</th>
-          </tr>
+          <tr>{renderHeader}</tr>
         </thead>
         <tbody>{employees.length > 0 && renderEmployess}</tbody>
       </table>

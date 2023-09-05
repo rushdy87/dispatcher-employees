@@ -1,5 +1,8 @@
+.table_container {
+  margin: 20px;
+}
 table {
-  width: 750px;
+  width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
 }
@@ -21,22 +24,6 @@ th,
 td {
   padding: 10px;
   text-align: right;
-}
-
-td:nth-child(1),
-th:nth-child(1) {
-  min-width: 120px;
-}
-td:nth-child(2),
-th:nth-child(2) {
-  min-width: 240px;
-}
-td:nth-child(3),
-th:nth-child(3) {
-  width: 200px;
-}
-td:nth-child(4),
-th:nth-child(4) {
   width: 200px;
 }
 
