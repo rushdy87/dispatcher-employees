@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { EmployeesNavbar, SearchBox } from '../../components';
+import { EmployeesNavbar, EmployeesTable, SearchBox } from '../../components';
 const Employees = () => {
   const [employees, setEmployees] = useState([]);
   const [filteredEmployees, setFilteredEmployees] = useState([]);
@@ -17,9 +17,6 @@ const Employees = () => {
     birthdate: { value: false, ar: 'تاريخ الميلاد' },
     address: { value: false, ar: 'العنوان' },
   });
-
-  console.log(filteredEmployees);
-  console.log(columns);
 
   useEffect(() => {
     axios
@@ -45,6 +42,7 @@ const Employees = () => {
           setFilteredEmployees={setFilteredEmployees}
         />
       )}
+      <EmployeesTable columns={columns} employees={filteredEmployees} />
     </div>
   );
 };

@@ -166,7 +166,7 @@ const EmployeeForm = ({ employeeDetails, handleSubmit }) => {
             <select
               name='job_title'
               id='job_title'
-              value={employee.job_title}
+              value={1}
               onChange={handleChange}
               disabled
             >
@@ -180,7 +180,7 @@ const EmployeeForm = ({ employeeDetails, handleSubmit }) => {
             <select
               name='degree'
               id='degree'
-              value={employee.degree}
+              value={1}
               onChange={handleChange}
               disabled
             >
