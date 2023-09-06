@@ -1,9 +1,13 @@
-import Employees from './pages/employees/Employees';
+import { Route, Routes } from 'react-router-dom';
+import { Employees, AddEmployees } from './pages';
 
 function App() {
   return (
     <div>
-      <Employees />
+      <Routes>
+        <Route path='/' element={<Employees />} />
+        <Route path='/add-employee' element={<AddEmployees />} />
+      </Routes>
     </div>
   );
 }

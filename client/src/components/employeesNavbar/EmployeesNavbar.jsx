@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import {
   MdPersonSearch,
   MdPersonAddAlt1,
@@ -5,24 +6,31 @@ import {
   MdPrint,
 } from 'react-icons/md';
 import './EmployeesNavbar.css';
-const EmployeesNavbar = () => {
+const EmployeesNavbar = ({ setShowSearchBox }) => {
   return (
     <>
       <ul className='employees-navbar-container '>
-        <li className='employees-navbar-item'>
-          <button>بحث</button>
+        <li
+          className='employees-navbar-item'
+          onClick={() => {
+            setShowSearchBox((prev) => !prev);
+          }}
+        >
+          <span>بحث</span>
           <MdPersonSearch />
         </li>
         <li className='employees-navbar-item'>
-          <button>اضافة موظف</button>
-          <MdPersonAddAlt1 />
+          <Link to='/add-employee'>
+            <span>اضافة موظف</span>
+            <MdPersonAddAlt1 />
+          </Link>
         </li>
         <li className='employees-navbar-item'>
-          <button>مايكروسوفت إكسل</button>
+          <span>مايكروسوفت إكسل</span>
           <MdSaveAlt />
         </li>
         <li className='employees-navbar-item'>
-          <button>طباعة</button>
+          <span>طباعة</span>
           <MdPrint />
         </li>
       </ul>
