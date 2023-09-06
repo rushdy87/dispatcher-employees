@@ -1,14 +1,31 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  direction: rtl;
+@font-face {
+  font-family: 'NotoKufiArabic'; /* Specify the desired font family name */
+
+  /* Font files in order of font weight (from lightest to heaviest) */
+  src: url('./fonts/NotoKufiArabic-Thin.ttf') format('truetype'),
+    url('./fonts/NotoKufiArabic-Light.ttf') format('truetype'),
+    url('./fonts/NotoKufiArabic-Regular.ttf') format('truetype'),
+    url('./fonts/NotoKufiArabic-Medium.ttf') format('truetype'),
+    url('./fonts/NotoKufiArabic-SemiBold.ttf') format('truetype'),
+    url('./fonts/NotoKufiArabic-Bold.ttf') format('truetype'),
+    url('./fonts/NotoKufiArabic-ExtraBold.ttf') format('truetype'),
+    url('./fonts/NotoKufiArabic-ExtraLight.ttf') format('truetype'),
+    url('./fonts/NotoKufiArabic-Black.ttf') format('truetype');
+
+  font-weight: normal;
+  font-style: normal;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+  direction: rtl;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Noto Kufi Arabic', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
 }
