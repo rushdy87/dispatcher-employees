@@ -1,11 +1,15 @@
 import { useState } from 'react';
-import { MdPersonRemoveAlt1, MdOutlineEditNote } from 'react-icons/md';
-import './EmployeesTable.css';
 import axios from 'axios';
+import { MdPersonRemoveAlt1, MdOutlineEditNote } from 'react-icons/md';
+import usePagination from '../../hooks/usePagination';
 import { EmployeeForm } from '../';
+import './EmployeesTable.css';
 
 const EmployeesTable = ({ columns, employees }) => {
   const [employeeDetails, setEmployeeDetails] = useState(null);
+
+  const { currentPage, currentData, nextPage, prevPage, goToPage, totalPages } =
+    usePagination(employees, 2);
 
   const handleDeleteEmployee = (employee) => {
     const confirmDelete = window.confirm(
@@ -41,7 +45,7 @@ const EmployeesTable = ({ columns, employees }) => {
     return null;
   });
 
-  const renderEmployess = employees.map((employee) => {
+  const renderEmployess = currentData.map((employee) => {
     return (
       <tr key={employee.id}>
         {Object.keys(columns).map((key) => {
@@ -66,6 +70,23 @@ const EmployeesTable = ({ columns, employees }) => {
 
   return (
     <div className='employees-table-container'>
+      <div className='pagination'>
+        <button onClick={prevPage} disabled={currentPage === 1}>
+          Previous
+        </button>
+        {Array.from({ length: totalPages }).map((_, index) => (
+          <button
+            key={index}
+            onClick={() => goToPage(index + 1)}
+            className={currentPage === index + 1 ? 'active' : ''}
+          >
+            {index + 1}
+          </button>
+        ))}
+        <button onClick={nextPage} disabled={currentPage === totalPages}>
+          Next
+        </button>
+      </div>
       <table>
         <thead>
           <tr>
