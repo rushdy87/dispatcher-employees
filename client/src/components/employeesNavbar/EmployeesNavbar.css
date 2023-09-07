@@ -36,3 +36,25 @@
   color: #ffffff;
   font-size: 1.3em;
 }
+
+.printable-table {
+  display: none;
+}
+
+.printable-table h2 {
+  text-align: center;
+  margin: 40px;
+}
+
+/* Define styles for when printing */
+@media print {
+  html,
+  body {
+    width: 210mm;
+    height: 297mm;
+  }
+  .printable-table {
+    display: block !important;
+    margin: 20px;
+  }
+}

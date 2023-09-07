@@ -1,8 +1,3 @@
-.employees-table-container {
-  width: 100%;
-  position: relative;
-}
-
 table {
   table-layout: fixed;
   border-collapse: collapse;

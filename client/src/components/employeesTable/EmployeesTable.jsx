@@ -1,16 +1,13 @@
-import { useState } from 'react';
 import axios from 'axios';
 import { MdPersonRemoveAlt1, MdOutlineEditNote } from 'react-icons/md';
-import { EditModel, Pagination } from '../';
-import usePagination from '../../hooks/usePagination';
 import './EmployeesTable.css';
 
-const EmployeesTable = ({ columns, employees }) => {
-  const [employeeDetails, setEmployeeDetails] = useState(null);
-
-  const { currentPage, currentData, nextPage, prevPage, goToPage, totalPages } =
-    usePagination(employees, 2);
-
+const EmployeesTable = ({
+  columns,
+  currentData,
+  setEmployeeDetails,
+  printable,
+}) => {
   const handleDeleteEmployee = (employee) => {
     const confirmDelete = window.confirm(
       'سيتم حذف الموظف من قاعدة البيانات الرئيسية، حيث لا يمكن استرجاعه مرة أخرى. هل أنت متأكد من الحذف؟'
@@ -54,42 +51,39 @@ const EmployeesTable = ({ columns, employees }) => {
           }
           return null;
         })}
-        <td>
-          <MdPersonRemoveAlt1 onClick={() => handleDeleteEmployee(employee)} />
-        </td>
-        <td>
-          <MdOutlineEditNote onClick={() => setEmployeeDetails(employee)} />
-        </td>
+        {!printable && (
+          <>
+            <td>
+              <MdPersonRemoveAlt1
+                onClick={() => handleDeleteEmployee(employee)}
+              />
+            </td>
+            <td>
+              <MdOutlineEditNote onClick={() => setEmployeeDetails(employee)} />
+            </td>
+          </>
+        )}
       </tr>
     );
   });
 
   return (
-    <div className='employees-table-container'>
-      <Pagination
-        currentPage={currentPage}
-        nextPage={nextPage}
-        prevPage={prevPage}
-        goToPage={goToPage}
-        totalPages={totalPages}
-      />
+    <>
       <table>
         <thead>
           <tr>
             {renderHeader}
-            <th>حذف</th>
-            <th>تعديل</th>
+            {!printable && (
+              <>
+                <th>حذف</th>
+                <th>تعديل</th>
+              </>
+            )}
           </tr>
         </thead>
-        <tbody>{employees.length > 0 && renderEmployess}</tbody>
+        <tbody>{currentData.length > 0 && renderEmployess}</tbody>
       </table>
-      {employeeDetails && (
-        <EditModel
-          employeeDetails={employeeDetails}
-          setEmployeeDetails={setEmployeeDetails}
-        />
-      )}
-    </div>
+    </>
   );
 };
 

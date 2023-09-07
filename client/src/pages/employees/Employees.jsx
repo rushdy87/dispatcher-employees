@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { EmployeesNavbar, EmployeesTable, SearchBox } from '../../components';
+import { EmployeesNavbar, SearchBox, ShowEmployees } from '../../components';
 const Employees = () => {
   const [employees, setEmployees] = useState([]);
   const [filteredEmployees, setFilteredEmployees] = useState([]);
@@ -34,15 +34,8 @@ const Employees = () => {
     <div className='employees-page-container'>
       <EmployeesNavbar
         setShowSearchBox={setShowSearchBox}
-        employees={filteredEmployees.map((emp) => {
-          const selectedColumns = Object.keys(columns)
-            .filter((key) => columns[key].value)
-            .reduce((acc, key) => {
-              acc[columns[key].ar] = emp[key];
-              return acc;
-            }, {});
-          return selectedColumns;
-        })}
+        columns={columns}
+        employees={filteredEmployees}
       />
       {showSearchBox && (
         <SearchBox
@@ -53,7 +46,7 @@ const Employees = () => {
           setFilteredEmployees={setFilteredEmployees}
         />
       )}
-      <EmployeesTable columns={columns} employees={filteredEmployees} />
+      <ShowEmployees columns={columns} employees={filteredEmployees} />
     </div>
   );
 };
