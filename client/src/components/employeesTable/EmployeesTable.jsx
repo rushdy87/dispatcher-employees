@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { MdPersonRemoveAlt1, MdOutlineEditNote } from 'react-icons/md';
+import { EditModel, Pagination } from '../';
 import usePagination from '../../hooks/usePagination';
-import { EmployeeForm } from '../';
 import './EmployeesTable.css';
 
 const EmployeesTable = ({ columns, employees }) => {
@@ -28,10 +28,6 @@ const EmployeesTable = ({ columns, employees }) => {
           alert('حدث خطأ أثناء الحذف. الرجاء المحاولة مرة أخرى.'); // Display an error message
         });
     }
-  };
-
-  const handleEdit = (employee) => {
-    setEmployeeDetails(employee);
   };
 
   const renderHeader = Object.keys(columns).map((key) => {
@@ -62,7 +58,7 @@ const EmployeesTable = ({ columns, employees }) => {
           <MdPersonRemoveAlt1 onClick={() => handleDeleteEmployee(employee)} />
         </td>
         <td>
-          <MdOutlineEditNote onClick={() => handleEdit(employee)} />
+          <MdOutlineEditNote onClick={() => setEmployeeDetails(employee)} />
         </td>
       </tr>
     );
@@ -70,23 +66,13 @@ const EmployeesTable = ({ columns, employees }) => {
 
   return (
     <div className='employees-table-container'>
-      <div className='pagination'>
-        <button onClick={prevPage} disabled={currentPage === 1}>
-          Previous
-        </button>
-        {Array.from({ length: totalPages }).map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToPage(index + 1)}
-            className={currentPage === index + 1 ? 'active' : ''}
-          >
-            {index + 1}
-          </button>
-        ))}
-        <button onClick={nextPage} disabled={currentPage === totalPages}>
-          Next
-        </button>
-      </div>
+      <Pagination
+        currentPage={currentPage}
+        nextPage={nextPage}
+        prevPage={prevPage}
+        goToPage={goToPage}
+        totalPages={totalPages}
+      />
       <table>
         <thead>
           <tr>
@@ -98,44 +84,10 @@ const EmployeesTable = ({ columns, employees }) => {
         <tbody>{employees.length > 0 && renderEmployess}</tbody>
       </table>
       {employeeDetails && (
-        <div className='edit-model'>
-          <div className='modal-contents'>
-            <EmployeeForm
-              employeeDetails={employeeDetails}
-              handleSubmit={(event, employee) => {
-                event.preventDefault();
-                // Create a FormData object from the form
-                const formData = new FormData(event.target);
-
-                // Create an object to store form data
-                const formDataObject = {};
-
-                // Iterate through FormData and populate the object
-                formData.forEach((value, key) => {
-                  formDataObject[key] = value;
-                });
-
-                axios
-                  .patch(`http://localhost:3030/employees/${employee.id}`, {
-                    employeeData: {
-                      ...employee,
-                      ...formDataObject,
-                      job_title: 1,
-                      degree: 1,
-                    },
-                  })
-                  .then((response) => {
-                    console.log(response.data);
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                  });
-                setEmployeeDetails(null);
-              }}
-            />
-            <button onClick={() => setEmployeeDetails(null)}>Cansel</button>
-          </div>
-        </div>
+        <EditModel
+          employeeDetails={employeeDetails}
+          setEmployeeDetails={setEmployeeDetails}
+        />
       )}
     </div>
   );
