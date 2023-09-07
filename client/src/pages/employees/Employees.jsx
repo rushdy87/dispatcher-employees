@@ -32,7 +32,18 @@ const Employees = () => {
 
   return (
     <div className='employees-page-container'>
-      <EmployeesNavbar setShowSearchBox={setShowSearchBox} />
+      <EmployeesNavbar
+        setShowSearchBox={setShowSearchBox}
+        employees={filteredEmployees.map((emp) => {
+          const selectedColumns = Object.keys(columns)
+            .filter((key) => columns[key].value)
+            .reduce((acc, key) => {
+              acc[columns[key].ar] = emp[key];
+              return acc;
+            }, {});
+          return selectedColumns;
+        })}
+      />
       {showSearchBox && (
         <SearchBox
           setShowSearchBox={setShowSearchBox}

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { mkConfig, generateCsv, download } from 'export-to-csv';
 import {
   MdPersonSearch,
   MdPersonAddAlt1,
@@ -6,7 +7,17 @@ import {
   MdPrint,
 } from 'react-icons/md';
 import './EmployeesNavbar.css';
-const EmployeesNavbar = ({ setShowSearchBox }) => {
+
+const EmployeesNavbar = ({ setShowSearchBox, employees }) => {
+  const handelExport = () => {
+    // mkConfig merges your options with the defaults
+    // and returns WithDefaults<ConfigOptions>
+    const csvConfig = mkConfig({ useKeysAsHeaders: true });
+    // Converts your Array<Object> to a CsvOutput string based on the configs
+    const csv = generateCsv(csvConfig)(employees);
+    download(csvConfig)(csv);
+  };
+
   return (
     <>
       <ul className='employees-navbar-container '>
@@ -25,8 +36,8 @@ const EmployeesNavbar = ({ setShowSearchBox }) => {
             <MdPersonAddAlt1 />
           </Link>
         </li>
-        <li className='employees-navbar-item'>
-          <span>مايكروسوفت إكسل</span>
+        <li className='employees-navbar-item' onClick={handelExport}>
+          <span>Export to CVC</span>
           <MdSaveAlt />
         </li>
         <li className='employees-navbar-item'>
