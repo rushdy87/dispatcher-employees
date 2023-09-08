@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { EditModel, EmployeesTable, Pagination } from '..';
 import usePagination from '../../hooks/usePagination';
 import './ShowEmployees.css';
+import { EmployeesContext, TableColumnsContext } from '../../contexts';
 
-const ShowEmployees = ({ columns, employees }) => {
+const ShowEmployees = () => {
   const [employeeDetails, setEmployeeDetails] = useState(null);
+  const { filteredEmployees } = useContext(EmployeesContext);
+  const { columns } = useContext(TableColumnsContext);
 
   const { currentPage, currentData, nextPage, prevPage, goToPage, totalPages } =
-    usePagination(employees, 2);
+    usePagination(filteredEmployees, 2);
 
   return (
     <div className='employees-table-container'>

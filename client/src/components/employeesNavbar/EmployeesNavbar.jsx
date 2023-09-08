@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useReactToPrint } from 'react-to-print';
 import { mkConfig, generateCsv, download } from 'export-to-csv';
@@ -10,17 +10,19 @@ import {
 } from 'react-icons/md';
 import './EmployeesNavbar.css';
 import EmployeesTable from '../employeesTable/EmployeesTable';
+import { EmployeesContext, TableColumnsContext } from '../../contexts';
 
-const EmployeesNavbar = ({ setShowSearchBox, employees, columns }) => {
+const EmployeesNavbar = ({ setShowSearchBox }) => {
   const componentRef = useRef();
-
+  const { filteredEmployees } = useContext(EmployeesContext);
+  const { columns } = useContext(TableColumnsContext);
   const handelExport = () => {
     // mkConfig merges your options with the defaults
     // and returns WithDefaults<ConfigOptions>
     const csvConfig = mkConfig({ useKeysAsHeaders: true });
     // Converts your Array<Object> to a CsvOutput string based on the configs
     const csv = generateCsv(csvConfig)(
-      employees.map((emp) => {
+      filteredEmployees.map((emp) => {
         const selectedColumns = Object.keys(columns)
           .filter((key) => columns[key].value)
           .reduce((acc, key) => {
@@ -67,7 +69,7 @@ const EmployeesNavbar = ({ setShowSearchBox, employees, columns }) => {
         <h2>الاستلام والتجهيز</h2>
         <EmployeesTable
           columns={columns}
-          currentData={employees}
+          currentData={filteredEmployees}
           setEmployeeDetails={() => {}}
           printable={true}
         />
