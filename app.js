@@ -7,6 +7,8 @@ const Degrees = require('./models/degrees');
 const Employees = require('./models/employees');
 
 const employeesRoutes = require('./routes/employees');
+const degreesRoutes = require('./routes/degrees');
+const jobTitlesRoutes = require('./routes/job-titles');
 
 const PORT = 3030;
 
@@ -30,7 +32,10 @@ app.use((req, res, next) => {
     .catch((err) => console.log(err));
 });
 
+// Routes
 app.use('/employees', employeesRoutes);
+app.use('/degrees', degreesRoutes);
+app.use('/job-titles', jobTitlesRoutes);
 
 sequelize
   // .sync({ force: true })
