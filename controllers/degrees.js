@@ -1,17 +1,6 @@
 const Degrees = require('../models/degrees');
 
-function handleResponse(
-  res,
-  error,
-  successData,
-  errorMessage = 'Internal server error'
-) {
-  if (error) {
-    console.error(error);
-    return res.status(500).json({ error: errorMessage });
-  }
-  return res.status(200).json(successData);
-}
+const { handleResponse } = require('../util/helper-functions');
 
 exports.getDegreeById = async (req, res, next) => {
   try {

@@ -4,19 +4,7 @@ const Employees = require('../models/employees');
 const Degrees = require('../models/degrees');
 const JobTitles = require('../models/job-titles');
 
-// Helper function to handle errors and send responses
-function handleResponse(
-  res,
-  error,
-  successData,
-  errorMessage = 'Internal server error'
-) {
-  if (error) {
-    console.error(error);
-    return res.status(500).json({ error: errorMessage });
-  }
-  return res.status(200).json(successData);
-}
+const { handleResponse } = require('../util/helper-functions');
 
 // Helper function to process employees
 const processEmployees = async (employees) => {
