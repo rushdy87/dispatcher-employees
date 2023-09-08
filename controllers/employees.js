@@ -6,29 +6,6 @@ const JobTitles = require('../models/job-titles');
 
 const { handleResponse } = require('../util/helper-functions');
 
-// Helper function to process employees
-const processEmployees = async (employees) => {
-  const processedEmployees = await Promise.all(
-    employees.map(async (employee) => {
-      const [degree, jobTitle] = await Promise.all([
-        Degrees.findByPk(employee.degree),
-        JobTitles.findByPk(employee.job_title),
-      ]);
-
-      if (degree) {
-        employee.degree = degree.degree_name;
-      }
-      if (jobTitle) {
-        employee.job_title = jobTitle.title_name;
-      }
-
-      return employee;
-    })
-  );
-
-  return processedEmployees;
-};
-
 // Get employee by ID
 exports.getEmployeeById = async (req, res, next) => {
   try {
@@ -39,9 +16,7 @@ exports.getEmployeeById = async (req, res, next) => {
       return res.status(404).json({ error: 'Employee not found' });
     }
 
-    const processedEmployees = await processEmployees([employee]);
-
-    return handleResponse(res, null, processedEmployees);
+    return handleResponse(res, null, employee);
   } catch (error) {
     return handleResponse(res, error);
   }
@@ -72,9 +47,7 @@ exports.fetchAll = async (req, res, next) => {
       return res.status(404).json({ error: 'No Employee found' });
     }
 
-    const processedEmployees = await processEmployees(employees);
-
-    return handleResponse(res, null, processedEmployees);
+    return handleResponse(res, null, employees);
   } catch (error) {
     return handleResponse(res, error);
   }
@@ -93,9 +66,7 @@ exports.getEmployeesByName = async (req, res, next) => {
       return res.status(404).json({ error: 'No Employee found' });
     }
 
-    const processedEmployees = await processEmployees(employees);
-
-    return handleResponse(res, null, processedEmployees);
+    return handleResponse(res, null, employees);
   } catch (error) {
     return handleResponse(res, error);
   }
