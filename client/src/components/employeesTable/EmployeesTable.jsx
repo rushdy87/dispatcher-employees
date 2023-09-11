@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import { EmployeesContext } from '../../contexts';
 import axios from 'axios';
 import { MdPersonRemoveAlt1, MdOutlineEditNote } from 'react-icons/md';
 import './EmployeesTable.css';
@@ -8,6 +10,8 @@ const EmployeesTable = ({
   setEmployeeDetails,
   printable,
 }) => {
+  const { deleteEmployee } = useContext(EmployeesContext);
+
   const handleDeleteEmployee = (employee) => {
     const confirmDelete = window.confirm(
       'سيتم حذف الموظف من قاعدة البيانات الرئيسية، حيث لا يمكن استرجاعه مرة أخرى. هل أنت متأكد من الحذف؟'
@@ -17,12 +21,13 @@ const EmployeesTable = ({
       axios
         .delete(`http://localhost:3030/employees/${employee.id}`)
         .then(({ data }) => {
-          console.log(data.message); // Log a success message
-          // Optionally, you can remove the deleted employee from the UI if needed.
+          console.log(data.message);
+          // Update the UI by calling the deleteEmployee function from context
+          deleteEmployee(employee.id);
         })
         .catch((error) => {
           console.error('Error deleting employee:', error);
-          alert('حدث خطأ أثناء الحذف. الرجاء المحاولة مرة أخرى.'); // Display an error message
+          alert('حدث خطأ أثناء الحذف. الرجاء المحاولة مرة أخرى.');
         });
     }
   };
