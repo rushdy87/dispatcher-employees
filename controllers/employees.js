@@ -32,7 +32,10 @@ exports.createEmployee = async (req, res, next) => {
       return res.status(500).json({ error: 'Internal server error' });
     }
 
-    return handleResponse(res, null, { message: 'Employee was added' });
+    return handleResponse(res, null, {
+      message: 'Employee was added',
+      employee,
+    });
   } catch (error) {
     return handleResponse(res, error);
   }

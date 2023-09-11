@@ -25,6 +25,7 @@ function usePagination(data, itemsPerPage) {
 
   return {
     currentPage,
+    setCurrentPage,
     currentData,
     nextPage,
     prevPage,

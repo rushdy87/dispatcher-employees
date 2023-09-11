@@ -1,7 +1,10 @@
+import { useContext } from 'react';
 import { EmployeeForm } from '../../components';
+import { EmployeesContext } from '../../contexts';
 import axios from 'axios';
 
 const AddEmployees = () => {
+  const { addEmployee } = useContext(EmployeesContext);
   const createNewEmployee = (event, employee) => {
     event.preventDefault();
     // Create a FormData object from the form
@@ -20,7 +23,8 @@ const AddEmployees = () => {
         employeeData: { ...employee, ...formDataObject },
       })
       .then((response) => {
-        console.log(response);
+        const newEmployee = response.data.employee;
+        addEmployee(newEmployee);
       })
       .catch((error) => {
         console.log(error);

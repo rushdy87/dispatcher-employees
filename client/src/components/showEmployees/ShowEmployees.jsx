@@ -9,6 +9,7 @@ const ShowEmployees = () => {
   const { filteredEmployees } = useContext(EmployeesContext);
   const { columns } = useContext(TableColumnsContext);
 
+  // Pagination logic
   const { currentPage, currentData, nextPage, prevPage, goToPage, totalPages } =
     usePagination(filteredEmployees, 10);
 
@@ -21,6 +22,7 @@ const ShowEmployees = () => {
         goToPage={goToPage}
         totalPages={totalPages}
       />
+      {/* Pass the currentData directly to EmployeesTable */}
       <EmployeesTable
         columns={columns}
         currentData={currentData}

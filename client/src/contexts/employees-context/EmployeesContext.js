@@ -27,6 +27,12 @@ export const EmployeesContextProvider = ({ children }) => {
     setEmployees(updatedEmployees);
     setFilteredEmployees(updatedEmployees);
   };
+  const addEmployee = (employee) => {
+    // Make a copy of the current employees array without the deleted employee
+    const updatedEmployees = [...employees, employee];
+    setEmployees(updatedEmployees);
+    setFilteredEmployees(updatedEmployees);
+  };
 
   return (
     <EmployeesContext.Provider
@@ -35,6 +41,7 @@ export const EmployeesContextProvider = ({ children }) => {
         filteredEmployees,
         setFilteredEmployees,
         deleteEmployee, // Provide the deleteEmployee function in the context
+        addEmployee,
       }}
     >
       {children}
