@@ -10,7 +10,7 @@ const ShowEmployees = () => {
   const { columns } = useContext(TableColumnsContext);
 
   const { currentPage, currentData, nextPage, prevPage, goToPage, totalPages } =
-    usePagination(filteredEmployees, 2);
+    usePagination(filteredEmployees, 10);
 
   return (
     <div className='employees-table-container'>

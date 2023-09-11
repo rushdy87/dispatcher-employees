@@ -37,6 +37,8 @@ app.use('/employees', employeesRoutes);
 app.use('/degrees', degreesRoutes);
 app.use('/job-titles', jobTitlesRoutes);
 
+// Employees.bulkCreate([]);
+
 sequelize
   // .sync({ force: true })
   .sync()
@@ -64,3 +66,11 @@ sequelize
   .catch((err) => {
     console.log(err);
   });
+
+/*
+[
+ 
+ 
+ 
+]
+*/

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { EmployeesNavbar, SearchBox, ShowEmployees } from '../../components';
+import './Employees.css';
 const Employees = () => {
   const [showSearchBox, setShowSearchBox] = useState(false);
 
