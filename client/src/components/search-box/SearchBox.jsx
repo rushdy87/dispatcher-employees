@@ -1,22 +1,12 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { TableColumnsContext } from '../../contexts/Table-columns-context';
 import { MdCancel } from 'react-icons/md';
 
 import './SearchBox.scss';
 
 const SearchBox = ({ setShowSearchBox }) => {
   const [employee, setEmployee] = useState({ id: '', name: '' });
-  const [columns, setColumns] = useState({
-    id: { value: true, ar: 'رقم الحاسبة' },
-    name: { value: true, ar: 'الاسم' },
-    job_title: { value: true, ar: 'العنوان الوظيفي' },
-    degree: { value: false, ar: 'التحصيل الدراسي' },
-    status: { value: true, ar: 'الحالة الوظيفية' },
-    workday: { value: false, ar: 'نوع الدوام' },
-    joining_date: { value: false, ar: 'تاريخ المباشرة' },
-    phone_number: { value: false, ar: 'رقم الهاتف' },
-    birthdate: { value: false, ar: 'تاريخ الميلاد' },
-    address: { value: false, ar: 'العنوان' },
-  });
+  const { columns, setColumns } = useContext(TableColumnsContext);
 
   const handleChange = (event) => {
     setEmployee((prev) => ({
