@@ -1,0 +1,12 @@
+.app-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+
+  .sidebar {
+  }
+
+  .pages {
+    width: 100%;
+  }
+}

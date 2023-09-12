@@ -1,0 +1,50 @@
+@use '../../base';
+.sidebar-container {
+  width: 60px;
+  background-color: base.$fb-gray-color;
+  height: 100vh;
+  overflow: hidden;
+  transition: 0.5s;
+  font-size: 1.2em;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    width: 300px;
+    font-size: 1.4em;
+    background-color: base.$fb-primary-color;
+
+    .sidebar-link {
+      border-bottom: 1px solid base.$fb-secondery-color;
+    }
+
+    a {
+      color: base.$fb-light-color;
+    }
+  }
+
+  a {
+    color: #000000;
+    font-weight: 500;
+
+    &:hover {
+      font-weight: 900;
+      color: #ffffff;
+    }
+  }
+
+  .sidebar-link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: right;
+    gap: 5px;
+    margin: 50px 10px;
+    padding: 10px;
+
+    .sidebar-icon {
+      min-width: 60px;
+      font-size: 1.5em;
+    }
+  }
+}
