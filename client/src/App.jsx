@@ -1,5 +1,5 @@
 import { Sidebar } from './components';
-import { ShowEmployees } from './pages';
+import { AddEmployee, ShowEmployees } from './pages';
 import './App.scss';
 
 function App() {
@@ -9,7 +9,8 @@ function App() {
         <Sidebar />
       </div>
       <div className='pages'>
-        <ShowEmployees />
+        {/* <ShowEmployees /> */}
+        <AddEmployee />
       </div>
     </div>
   );

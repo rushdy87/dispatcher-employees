@@ -16,6 +16,22 @@
     font-size: 1.3em;
   }
 }
+.btn_cancel {
+  font-size: 1.2em;
+  width: 100px;
+  height: 40px;
+  border: red 1px solid;
+  background-color: base.$fb-light-color;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.2);
+    font-size: 1.3em;
+  }
+}
 
 .app-container {
   display: flex;
@@ -26,8 +42,8 @@
   }
 
   .pages {
-    width: 100%;
-    margin: auto;
+    width: 98%;
     padding: 20px;
+    margin: auto;
   }
 }

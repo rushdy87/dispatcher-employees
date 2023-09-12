@@ -1,10 +1,9 @@
 import { useContext } from 'react';
-import { EmployeesContext } from '../../contexts/employees-context';
+import { EmployeesContext, TableColumnsContext } from '../../contexts';
 import { MdPersonRemoveAlt1, MdOutlineEditNote } from 'react-icons/md';
 import './EmployeesTable.scss';
 import TablePagination from '../table-pagination/TablePagination';
 import usePagination from '../../hooks/usePagination';
-import { TableColumnsContext } from '../../contexts/Table-columns-context';
 
 const EmployeesTable = () => {
   const { employees } = useContext(EmployeesContext);

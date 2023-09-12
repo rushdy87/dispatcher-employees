@@ -1,6 +1,5 @@
 import { useContext, useState } from 'react';
-import { TableColumnsContext } from '../../contexts/Table-columns-context';
-import { EmployeesContext } from '../../contexts/employees-context';
+import { EmployeesContext, TableColumnsContext } from '../../contexts';
 import { MdCancel } from 'react-icons/md';
 
 import './SearchBox.scss';

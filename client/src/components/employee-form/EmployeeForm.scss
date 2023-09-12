@@ -1,0 +1,71 @@
+@use '../../base.scss';
+
+.employee-form-container {
+  width: 90%;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  border: 2px solid base.$fb-primary-color;
+  background-color: base.$fb-light-color;
+  padding: 20px;
+
+  .employee-form-header {
+    font-size: 2em;
+    font-weight: 500;
+    color: base.$fb-secondery-color;
+    border-bottom: 1px solid base.$fb-secondery-color;
+    margin-bottom: 10px;
+  }
+
+  .employee-form-inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+    font-size: 1.2em;
+    font-weight: 500;
+
+    .id_and_name,
+    .status-and-workday,
+    .degrre-and-job_title {
+      display: flex;
+      justify-content: space-between;
+      gap: 100px;
+    }
+
+    .input-field {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+
+      input,
+      select {
+        border: 1px solid base.$fb-gray-color;
+        border-radius: 8px;
+        width: 300px;
+        height: 40px;
+      }
+
+      select {
+        width: 150px;
+      }
+
+      label {
+        font-weight: 900;
+      }
+
+      input[type='number'] {
+        font-size: 1.2em;
+        width: 120px;
+      }
+    }
+  }
+  .btns {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    margin: 20px;
+  }
+}

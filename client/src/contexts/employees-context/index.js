@@ -3,6 +3,7 @@ import {
   getAllEmployees,
   getEmployeeById,
   getEmployeesByName,
+  addEmployee as ae,
 } from '../../utils/api';
 
 export const EmployeesContext = createContext({
@@ -69,6 +70,21 @@ export const EmployeesContextProvider = ({ children }) => {
     }
   };
 
+  const addEmployee = async (employee) => {
+    try {
+      const response = await ae(employee);
+      const newEmployee = response.employee;
+      console.log(newEmployee);
+      if (newEmployee) {
+        setEmployees();
+      } else {
+        setError('Employee not found');
+      }
+    } catch (error) {
+      setError('An error occurred');
+    }
+  };
+
   return (
     <EmployeesContext.Provider
       value={{
@@ -76,6 +92,7 @@ export const EmployeesContextProvider = ({ children }) => {
         findEmployeeById,
         findEmployeesByName,
         fetchAllEmployees,
+        addEmployee,
         error,
         isLoading,
       }}
