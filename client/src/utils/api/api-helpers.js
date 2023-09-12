@@ -18,6 +18,13 @@ export const makeApiRequest = async (url, method, data = null) => {
       data,
     });
 
+    if (response.status === 404) {
+      // Handle the 404 error specifically.
+      // You can return null or throw a custom error message if needed.
+      console.log('Resource not found');
+      return null;
+    }
+
     return response.data;
   } catch (error) {
     handleApiError(error);

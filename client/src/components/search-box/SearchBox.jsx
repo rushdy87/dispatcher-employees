@@ -1,11 +1,14 @@
 import { useContext, useState } from 'react';
 import { TableColumnsContext } from '../../contexts/Table-columns-context';
+import { EmployeesContext } from '../../contexts/employees-context';
 import { MdCancel } from 'react-icons/md';
 
 import './SearchBox.scss';
 
 const SearchBox = ({ setShowSearchBox }) => {
   const [employee, setEmployee] = useState({ id: '', name: '' });
+  const { findEmployeeById, findEmployeesByName, fetchAllEmployees } =
+    useContext(EmployeesContext);
   const { columns, setColumns } = useContext(TableColumnsContext);
 
   const handleChange = (event) => {
@@ -17,6 +20,16 @@ const SearchBox = ({ setShowSearchBox }) => {
 
   const handleSearch = (event) => {
     event.preventDefault();
+
+    if (employee.id && !employee.name) {
+      findEmployeeById(employee.id);
+    } else if (!employee.id && employee.name) {
+      findEmployeesByName(employee.name);
+    } else {
+      fetchAllEmployees();
+    }
+
+    // Clear the input fields after the search
     setEmployee({ id: '', name: '' });
   };
 
