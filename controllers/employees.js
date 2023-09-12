@@ -1,8 +1,6 @@
 const { Op } = require('sequelize');
 
 const Employees = require('../models/employees');
-const Degrees = require('../models/degrees');
-const JobTitles = require('../models/job-titles');
 
 const { handleResponse } = require('../util/helper-functions');
 
