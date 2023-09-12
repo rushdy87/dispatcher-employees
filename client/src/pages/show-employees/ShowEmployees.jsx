@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SearchBox, TableNav } from '../../components';
+import { EmployeesTable, SearchBox, TableNav } from '../../components';
 import './ShowEmployees.scss';
 
 const ShowEmployees = () => {
@@ -8,6 +8,7 @@ const ShowEmployees = () => {
     <div className='show-employees'>
       <TableNav setShowSearchBox={setShowSearchBox} />
       {showSearchBox && <SearchBox setShowSearchBox={setShowSearchBox} />}
+      <EmployeesTable />
     </div>
   );
 };

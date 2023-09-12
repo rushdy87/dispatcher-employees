@@ -1,0 +1,82 @@
+@use '../../base.scss';
+
+table {
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin: 0 auto;
+
+  thead {
+    background-color: base.$fb-primary-color;
+    color: #ffffff;
+  }
+
+  tr {
+    display: block;
+    position: relative;
+  }
+  th,
+  td {
+    padding: 10px;
+  }
+
+  th {
+    text-align: center;
+  }
+
+  td {
+    text-align: right;
+  }
+
+  td svg {
+    font-size: 1.4em;
+    color: #4267b2;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  td svg:hover {
+    transform: scale(1.5);
+  }
+
+  tbody {
+    display: block;
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+  }
+  tr:nth-child(even) {
+    background-color: #4267b222;
+  }
+
+  .id-column {
+    width: 100px;
+  }
+
+  .name-column {
+    width: 300px;
+  }
+  .job_title-column {
+    width: 100px;
+  }
+  .degree-column {
+    width: 100px;
+  }
+  .status-column {
+    width: 100px;
+  }
+  .workday-column {
+    width: 100px;
+  }
+  .joining_date-column {
+    width: 120px;
+  }
+  .phone_number-column {
+    width: 120px;
+  }
+
+  .birthdate-column {
+    width: 120px;
+  }
+  .address-column {
+    width: 70px;
+  }
+}

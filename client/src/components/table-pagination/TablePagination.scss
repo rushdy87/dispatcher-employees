@@ -1,0 +1,29 @@
+@use '../../base.scss';
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  margin: 10px 0 0 0;
+
+  button {
+    background-color: base.$fb-primary-color;
+    border: none;
+    border-radius: 8px;
+    padding: 5px;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+  }
+
+  button[disabled] {
+    background-color: base.$fb-secondery-color;
+    cursor: default;
+  }
+
+  .active {
+    background-color: #898f9c;
+  }
+}
