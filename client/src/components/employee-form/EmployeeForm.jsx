@@ -230,7 +230,8 @@ const EmployeeForm = ({
           <button
             type='reset'
             className='btn_cancel'
-            onClick={() => {
+            onClick={(event) => {
+              event.preventDefault();
               employeeDetails ? setEmployeeDetails(null) : nav('/');
             }}
           >

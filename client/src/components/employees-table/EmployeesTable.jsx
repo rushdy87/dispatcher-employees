@@ -8,6 +8,7 @@ import { Model, EmployeeForm } from '../';
 
 const EmployeesTable = () => {
   const [employeeDetails, setEmployeeDetails] = useState(null);
+  const [showModel, setShowModel] = useState(false);
   const { employees, editEmployee } = useContext(EmployeesContext);
   const { columns } = useContext(TableColumnsContext);
 
@@ -44,7 +45,12 @@ const EmployeesTable = () => {
               <MdPersonRemoveAlt1 onClick={() => {}} />
             </td>
             <td>
-              <MdOutlineEditNote onClick={() => setEmployeeDetails(employee)} />
+              <MdOutlineEditNote
+                onClick={() => {
+                  setEmployeeDetails(employee);
+                  setShowModel(true);
+                }}
+              />
             </td>
           </>
         }
@@ -76,8 +82,8 @@ const EmployeesTable = () => {
         <tbody>{currentData.length > 0 && renderEmployess}</tbody>
       </table>
 
-      {employeeDetails && (
-        <Model>
+      {showModel && (
+        <Model setShowModel={setShowModel}>
           <EmployeeForm
             employeeDetails={employeeDetails}
             submitHandler={async (employee) => {
