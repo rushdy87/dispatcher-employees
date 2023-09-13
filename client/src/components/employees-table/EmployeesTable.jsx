@@ -76,13 +76,16 @@ const EmployeesTable = () => {
 
   return (
     <>
-      <TablePagination
-        currentPage={currentPage}
-        nextPage={nextPage}
-        prevPage={prevPage}
-        goToPage={goToPage}
-        totalPages={totalPages}
-      />
+      <div className='table-header'>
+        <TablePagination
+          currentPage={currentPage}
+          nextPage={nextPage}
+          prevPage={prevPage}
+          goToPage={goToPage}
+          totalPages={totalPages}
+        />
+        <div className='employees-number'>العدد: {employees.length}</div>
+      </div>
       <table>
         <thead>
           <tr>

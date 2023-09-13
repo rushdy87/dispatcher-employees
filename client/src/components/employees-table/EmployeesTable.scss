@@ -1,5 +1,21 @@
 @use '../../base.scss';
 
+.table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 70%;
+  margin: 10px;
+
+  .employees-number {
+    border: 1px solid base.$fb-secondery-color;
+    border-radius: 4px;
+    padding: 5px;
+    font-weight: 700;
+    font-size: 1.2em;
+  }
+}
+
 table {
   table-layout: fixed;
   border-collapse: collapse;

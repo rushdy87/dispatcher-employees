@@ -5,9 +5,17 @@ import { MdCancel } from 'react-icons/md';
 import './SearchBox.scss';
 
 const SearchBox = ({ setShowSearchBox }) => {
-  const [employee, setEmployee] = useState({ id: '', name: '' });
-  const { findEmployeeById, findEmployeesByName, fetchAllEmployees } =
-    useContext(EmployeesContext);
+  const [employee, setEmployee] = useState({
+    id: '',
+    name: '',
+    gender: 'all',
+  });
+  const {
+    findEmployeeById,
+    findEmployeesByName,
+    findEmployeesByGender,
+    fetchAllEmployees,
+  } = useContext(EmployeesContext);
   const { columns, setColumns } = useContext(TableColumnsContext);
 
   const handleChange = (event) => {
@@ -20,12 +28,16 @@ const SearchBox = ({ setShowSearchBox }) => {
   const handleSearch = (event) => {
     event.preventDefault();
 
-    if (employee.id && !employee.name) {
-      findEmployeeById(employee.id);
-    } else if (!employee.id && employee.name) {
-      findEmployeesByName(employee.name);
+    if (employee.gender === 'all') {
+      if (employee.id && !employee.name) {
+        findEmployeeById(employee.id);
+      } else if (!employee.id && employee.name) {
+        findEmployeesByName(employee.name);
+      } else {
+        fetchAllEmployees();
+      }
     } else {
-      fetchAllEmployees();
+      findEmployeesByGender(employee.gender);
     }
 
     // Clear the input fields after the search
@@ -59,6 +71,21 @@ const SearchBox = ({ setShowSearchBox }) => {
                 value={employee.name}
                 onChange={handleChange}
               />
+            </div>
+            <div className='search-input'>
+              <label htmlFor='gender'>النوع</label>
+              <select
+                name='gender'
+                id='gender'
+                value={employee.gender}
+                onChange={handleChange}
+              >
+                <option value='all' defaultValue>
+                  الجميع
+                </option>
+                <option value='ذكر'>ذكر</option>
+                <option value='أنثى'>أنثى</option>
+              </select>
             </div>
           </div>
           <div className='columns-line'>

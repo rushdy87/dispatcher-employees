@@ -46,6 +46,12 @@
           width: 100px;
         }
       }
+
+      select {
+        width: 100px;
+        border: 1px solid base.$fb-primary-color;
+        border-radius: 10px;
+      }
     }
   }
 

@@ -6,6 +6,7 @@ import {
   addEmployee as ae,
   updateEmployee,
   deleteEmployee as de,
+  getEmployeesByGender,
 } from '../../utils/api';
 
 export const EmployeesContext = createContext({
@@ -53,6 +54,19 @@ export const EmployeesContextProvider = ({ children }) => {
   const findEmployeesByName = async (name) => {
     try {
       const employees = await getEmployeesByName(name);
+      if (employees.length > 0) {
+        setEmployees(employees);
+      } else {
+        setError('Employee not found');
+      }
+    } catch (error) {
+      setError('An error occurred');
+    }
+  };
+
+  const findEmployeesByGender = async (genderName) => {
+    try {
+      const employees = await getEmployeesByGender(genderName);
       if (employees.length > 0) {
         setEmployees(employees);
       } else {
@@ -117,6 +131,7 @@ export const EmployeesContextProvider = ({ children }) => {
         employees,
         findEmployeeById,
         findEmployeesByName,
+        findEmployeesByGender,
         fetchAllEmployees,
         addEmployee,
         editEmployee,

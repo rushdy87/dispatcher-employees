@@ -14,6 +14,10 @@ export const getEmployeesByName = async (name) => {
   const url = `/employees/name/${name}`;
   return makeApiRequest(url, 'GET');
 };
+export const getEmployeesByGender = async (genderName) => {
+  const url = `/employees/gender/${genderName}`;
+  return makeApiRequest(url, 'GET');
+};
 
 export const addEmployee = async (employee) => {
   const url = '/employees/newEmployees';
