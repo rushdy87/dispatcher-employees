@@ -16,6 +16,9 @@ route.get('/', employeesController.fetchAll);
 // GET /employees/:name
 route.get('/name/:name', employeesController.getEmployeesByName);
 
+// GET /employees/gender/:gender
+route.get('/gender/:gender', employeesController.getEmployeesByName);
+
 // PATCH /employees/:id
 route.patch('/:id', employeesController.updateEmployee);
 

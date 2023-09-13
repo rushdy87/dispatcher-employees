@@ -58,9 +58,27 @@ exports.fetchAll = async (req, res, next) => {
 exports.getEmployeesByName = async (req, res, next) => {
   try {
     const employeeName = req.params.name;
-    console.log(employeeName);
     const employees = await Employees.findAll({
       where: { name: { [Op.like]: `%${employeeName}%` } },
+    });
+
+    if (employees.length === 0) {
+      return res.status(404).json({ error: 'No Employee found' });
+    }
+
+    return handleResponse(res, null, employees);
+  } catch (error) {
+    return handleResponse(res, error);
+  }
+};
+
+// Get employees be gender
+exports.getEmployeesByName = async (req, res, next) => {
+  try {
+    const { gender } = req.params;
+
+    const employees = await Employees.findAll({
+      where: { gender },
     });
 
     if (employees.length === 0) {
