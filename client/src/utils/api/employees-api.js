@@ -22,7 +22,7 @@ export const addEmployee = async (employee) => {
 
 export const updateEmployee = async (employee) => {
   const url = `/employees/${employee.id}`;
-  return makeApiRequest(url, 'PATCH');
+  return makeApiRequest(url, 'PATCH', { employeeData: employee });
 };
 
 export const deleteEmployee = async (id) => {

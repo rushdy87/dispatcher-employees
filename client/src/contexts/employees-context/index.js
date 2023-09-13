@@ -4,6 +4,7 @@ import {
   getEmployeeById,
   getEmployeesByName,
   addEmployee as ae,
+  updateEmployee,
 } from '../../utils/api';
 
 export const EmployeesContext = createContext({
@@ -74,9 +75,21 @@ export const EmployeesContextProvider = ({ children }) => {
     try {
       const response = await ae(employee);
       const newEmployee = response.employee;
-      console.log(newEmployee);
       if (newEmployee) {
-        setEmployees();
+        fetchAllEmployees();
+      } else {
+        setError('Employee not found');
+      }
+    } catch (error) {
+      setError('An error occurred');
+    }
+  };
+  const editEmployee = async (employee) => {
+    try {
+      const response = await updateEmployee(employee);
+      const newEmployee = response.employee;
+      if (newEmployee) {
+        fetchAllEmployees();
       } else {
         setError('Employee not found');
       }
@@ -93,6 +106,7 @@ export const EmployeesContextProvider = ({ children }) => {
         findEmployeesByName,
         fetchAllEmployees,
         addEmployee,
+        editEmployee,
         error,
         isLoading,
       }}

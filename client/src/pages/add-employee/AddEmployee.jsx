@@ -17,7 +17,7 @@ const AddEmployee = () => {
 
   return (
     <div className='add-employee-container'>
-      <EmployeeForm submithandler={handleAddingEmployee} />
+      <EmployeeForm submitHandler={handleAddingEmployee} />
     </div>
   );
 };

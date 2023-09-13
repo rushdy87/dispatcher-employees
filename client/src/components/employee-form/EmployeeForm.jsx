@@ -20,7 +20,11 @@ const defaultValue = {
   unit: 'الاستلام والتجهيز',
 };
 
-const EmployeeForm = ({ employeeDetails, submithandler }) => {
+const EmployeeForm = ({
+  employeeDetails,
+  submitHandler,
+  setEmployeeDetails,
+}) => {
   const [employee, setEmployee] = useState(employeeDetails || defaultValue);
   const { degrees } = useContext(DegreesContext);
   const { jobTitles } = useContext(JobTitleContext);
@@ -49,6 +53,11 @@ const EmployeeForm = ({ employeeDetails, submithandler }) => {
     }));
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    submitHandler(employee);
+  };
+
   return (
     <div className='employee-form-container'>
       <div className='employee-form-header'>
@@ -58,7 +67,7 @@ const EmployeeForm = ({ employeeDetails, submithandler }) => {
             : `تعديل: ${employeeDetails.name}`}
         </h1>
       </div>
-      <form onSubmit={() => submithandler(employee)}>
+      <form onSubmit={handleSubmit}>
         <div className='employee-form-inputs'>
           <div className='id_and_name'>
             <div className='input-field'>
@@ -218,7 +227,13 @@ const EmployeeForm = ({ employeeDetails, submithandler }) => {
           <button type='submit' className='btn_primary'>
             حفظ
           </button>
-          <button type='reset' className='btn_cancel' onClick={() => nav('/')}>
+          <button
+            type='reset'
+            className='btn_cancel'
+            onClick={() => {
+              employeeDetails ? setEmployeeDetails(null) : nav('/');
+            }}
+          >
             عودة
           </button>
         </div>

@@ -1,12 +1,14 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { EmployeesContext, TableColumnsContext } from '../../contexts';
 import { MdPersonRemoveAlt1, MdOutlineEditNote } from 'react-icons/md';
 import './EmployeesTable.scss';
 import TablePagination from '../table-pagination/TablePagination';
 import usePagination from '../../hooks/usePagination';
+import { Model, EmployeeForm } from '../';
 
 const EmployeesTable = () => {
-  const { employees } = useContext(EmployeesContext);
+  const [employeeDetails, setEmployeeDetails] = useState(null);
+  const { employees, editEmployee } = useContext(EmployeesContext);
   const { columns } = useContext(TableColumnsContext);
 
   const { currentData, currentPage, nextPage, prevPage, goToPage, totalPages } =
@@ -42,7 +44,7 @@ const EmployeesTable = () => {
               <MdPersonRemoveAlt1 onClick={() => {}} />
             </td>
             <td>
-              <MdOutlineEditNote onClick={() => {}} />
+              <MdOutlineEditNote onClick={() => setEmployeeDetails(employee)} />
             </td>
           </>
         }
@@ -73,6 +75,23 @@ const EmployeesTable = () => {
         </thead>
         <tbody>{currentData.length > 0 && renderEmployess}</tbody>
       </table>
+
+      {employeeDetails && (
+        <Model>
+          <EmployeeForm
+            employeeDetails={employeeDetails}
+            submitHandler={async (employee) => {
+              try {
+                await editEmployee(employee);
+                setEmployeeDetails(null);
+              } catch (error) {
+                console.log(error);
+              }
+            }}
+            setEmployeeDetails={setEmployeeDetails}
+          />
+        </Model>
+      )}
     </>
   );
 };

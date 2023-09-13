@@ -1,3 +1,4 @@
+import { Routes, Route } from 'react-router-dom';
 import { Sidebar } from './components';
 import { AddEmployee, ShowEmployees } from './pages';
 import './App.scss';
@@ -8,9 +9,12 @@ function App() {
       <div className='sidebar'>
         <Sidebar />
       </div>
+
       <div className='pages'>
-        {/* <ShowEmployees /> */}
-        <AddEmployee />
+        <Routes>
+          <Route path='/' element={<ShowEmployees />} />
+          <Route path='/add-employee' element={<AddEmployee />} />
+        </Routes>
       </div>
     </div>
   );

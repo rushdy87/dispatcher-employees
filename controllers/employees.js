@@ -101,7 +101,10 @@ exports.updateEmployee = async (req, res, next) => {
       return res.status(500).json({ error: 'Internal server error' });
     }
 
-    return handleResponse(res, null, { message: 'Employee was updated' });
+    return handleResponse(res, null, {
+      message: 'Employee was updated',
+      employee,
+    });
   } catch (error) {
     return handleResponse(res, error);
   }
