@@ -106,6 +106,7 @@ const EmployeesTable = () => {
               try {
                 await editEmployee(employee);
                 setEmployeeDetails(null);
+                setShowModel(false);
               } catch (error) {
                 console.log(error);
               }
