@@ -1,6 +1,11 @@
 import { useContext, useState } from 'react';
 import { MdPersonRemoveAlt1, MdOutlineEditNote } from 'react-icons/md';
-import { EmployeesContext, TableColumnsContext } from '../../contexts';
+import {
+  EmployeesContext,
+  TableColumnsContext,
+  DegreesContext,
+  JobTitleContext,
+} from '../../contexts';
 import TablePagination from '../table-pagination/TablePagination';
 import usePagination from '../../hooks/usePagination';
 import { Model, EmployeeForm } from '../';
@@ -12,6 +17,8 @@ const EmployeesTable = () => {
   const { employees, editEmployee, deleteEmployee } =
     useContext(EmployeesContext);
   const { columns } = useContext(TableColumnsContext);
+  const { degrees } = useContext(DegreesContext);
+  const { jobTitles } = useContext(JobTitleContext);
 
   const { currentData, currentPage, nextPage, prevPage, goToPage, totalPages } =
     usePagination(employees, 15);
@@ -47,7 +54,11 @@ const EmployeesTable = () => {
           if (columns[key].value) {
             return (
               <td key={key} className={`${key}-column`}>
-                {employee[key]}
+                {key === 'degree'
+                  ? degrees[employee[key] - 1]?.degree_name
+                  : key === 'job_title'
+                  ? jobTitles[employee[key] - 1]?.title_name
+                  : employee[key]}
               </td>
             );
           }

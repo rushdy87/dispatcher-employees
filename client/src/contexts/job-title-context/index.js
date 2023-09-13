@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 import { getAllJobTitles } from '../../utils/api';
 
-export const JobTitleContext = createContext({});
+export const JobTitleContext = createContext({ jobTitles: [] });
 
 export const JobTitleContextProvider = ({ children }) => {
   const [jobTitles, setJobTitles] = useState([]);
