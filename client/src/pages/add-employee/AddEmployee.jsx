@@ -1,15 +1,17 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { EmployeesContext } from '../../contexts';
 
 import { EmployeeForm } from '../../components';
 import './AddEmployee.scss';
 
 const AddEmployee = () => {
+  const [message, setMessage] = useState('');
   const { addEmployee } = useContext(EmployeesContext);
 
   const handleAddingEmployee = async (employee) => {
     try {
-      await addEmployee(employee);
+      const result = await addEmployee(employee);
+      setMessage(result);
     } catch (error) {
       console.log(error);
     }
@@ -17,6 +19,7 @@ const AddEmployee = () => {
 
   return (
     <div className='add-employee-container'>
+      {message && <p className='add-employee-message'>{message}</p>}
       <EmployeeForm submitHandler={handleAddingEmployee} />
     </div>
   );

@@ -120,6 +120,24 @@ const SearchBox = ({ setShowSearchBox }) => {
                 type='checkbox'
                 name='columns'
                 id='degree'
+                checked={columns.specialist_degree.value}
+                onChange={(e) =>
+                  setColumns({
+                    ...columns,
+                    specialist_degree: {
+                      ...columns.specialist_degree,
+                      value: e.target.checked,
+                    },
+                  })
+                }
+              />
+            </div>
+            <div className='columns-checkbox'>
+              <label htmlFor='degree'>الشهادة</label>
+              <input
+                type='checkbox'
+                name='columns'
+                id='degree'
                 checked={columns.degree.value}
                 onChange={(e) =>
                   setColumns({

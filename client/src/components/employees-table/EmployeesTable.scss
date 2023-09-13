@@ -16,11 +16,12 @@ table {
   }
   th,
   td {
-    padding: 10px;
+    padding: 20px;
+    width: 100px;
   }
 
   th {
-    text-align: center;
+    text-align: right;
   }
 
   td {
@@ -48,39 +49,41 @@ table {
   }
 
   .id-column {
-    width: 100px;
+    min-width: 100px;
   }
 
   .name-column {
-    width: 300px;
+    min-width: 250px;
   }
   .job_title-column {
-    width: 100px;
+    min-width: 100px;
   }
   .degree-column {
-    width: 100px;
+    min-width: 100px;
   }
   .status-column {
-    width: 100px;
+    min-width: 100px;
   }
   .workday-column {
-    width: 100px;
+    min-width: 100px;
   }
   .joining_date-column {
-    width: 120px;
+    min-width: 100px;
   }
   .phone_number-column {
-    width: 120px;
+    min-width: 80px;
   }
 
   .birthdate-column {
-    width: 120px;
+    min-width: 100px;
   }
   .address-column {
-    width: 70px;
+    min-width: 70px;
   }
-}
-
-.edit {
-  position: relative;
+  .edit-column {
+    min-width: 50px;
+  }
+  .delete-column {
+    min-width: 50px;
+  }
 }

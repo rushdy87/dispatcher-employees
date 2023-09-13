@@ -5,6 +5,7 @@ import {
   getEmployeesByName,
   addEmployee as ae,
   updateEmployee,
+  deleteEmployee as de,
 } from '../../utils/api';
 
 export const EmployeesContext = createContext({
@@ -77,11 +78,14 @@ export const EmployeesContextProvider = ({ children }) => {
       const newEmployee = response.employee;
       if (newEmployee) {
         fetchAllEmployees();
+        return 'تم اضافة الموظف بنجاح';
       } else {
         setError('Employee not found');
+        return 'حدث خلل اثناء الاضافة.. يرجى المحا،ولة في وقت لاحق';
       }
     } catch (error) {
       setError('An error occurred');
+      return 'حدث خلل اثناء الاضافة.. يرجى المحا،ولة في وقت لاحق';
     }
   };
   const editEmployee = async (employee) => {
@@ -98,6 +102,15 @@ export const EmployeesContextProvider = ({ children }) => {
     }
   };
 
+  const deleteEmployee = async (id) => {
+    try {
+      await de(id);
+      fetchAllEmployees();
+    } catch (error) {
+      setError('An error occurred');
+    }
+  };
+
   return (
     <EmployeesContext.Provider
       value={{
@@ -107,6 +120,7 @@ export const EmployeesContextProvider = ({ children }) => {
         fetchAllEmployees,
         addEmployee,
         editEmployee,
+        deleteEmployee,
         error,
         isLoading,
       }}

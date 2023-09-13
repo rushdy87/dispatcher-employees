@@ -1,15 +1,16 @@
 import { useContext, useState } from 'react';
-import { EmployeesContext, TableColumnsContext } from '../../contexts';
 import { MdPersonRemoveAlt1, MdOutlineEditNote } from 'react-icons/md';
-import './EmployeesTable.scss';
+import { EmployeesContext, TableColumnsContext } from '../../contexts';
 import TablePagination from '../table-pagination/TablePagination';
 import usePagination from '../../hooks/usePagination';
 import { Model, EmployeeForm } from '../';
+import './EmployeesTable.scss';
 
 const EmployeesTable = () => {
   const [employeeDetails, setEmployeeDetails] = useState(null);
   const [showModel, setShowModel] = useState(false);
-  const { employees, editEmployee } = useContext(EmployeesContext);
+  const { employees, editEmployee, deleteEmployee } =
+    useContext(EmployeesContext);
   const { columns } = useContext(TableColumnsContext);
 
   const { currentData, currentPage, nextPage, prevPage, goToPage, totalPages } =
@@ -26,6 +27,19 @@ const EmployeesTable = () => {
     return null;
   });
 
+  const handleDeleteEmployee = (employee) => {
+    const confirmDelete = window.confirm(
+      'سيتم حذف الموظف من قاعدة البيانات الرئيسية، حيث لا يمكن استرجاعه مرة أخرى. هل أنت متأكد من الحذف؟'
+    );
+
+    if (confirmDelete) {
+      deleteEmployee(employee.id).catch((error) => {
+        console.error('Error deleting employee:', error);
+        alert('حدث خطأ أثناء الحذف. الرجاء المحاولة مرة أخرى.');
+      });
+    }
+  };
+
   const renderEmployess = currentData.map((employee) => {
     return (
       <tr key={employee.id}>
@@ -41,10 +55,12 @@ const EmployeesTable = () => {
         })}
         {
           <>
-            <td>
-              <MdPersonRemoveAlt1 onClick={() => {}} />
+            <td className='delete-column'>
+              <MdPersonRemoveAlt1
+                onClick={() => handleDeleteEmployee(employee)}
+              />
             </td>
-            <td>
+            <td className='edit-column'>
               <MdOutlineEditNote
                 onClick={() => {
                   setEmployeeDetails(employee);
@@ -73,8 +89,8 @@ const EmployeesTable = () => {
             {renderHeader}
             {
               <>
-                <th>حذف</th>
-                <th>تعديل</th>
+                <th className='delete-column'>حذف</th>
+                <th className='edit-column'>تعديل</th>
               </>
             }
           </tr>
