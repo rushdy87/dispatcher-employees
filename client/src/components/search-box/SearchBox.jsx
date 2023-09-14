@@ -4,12 +4,14 @@ import { MdCancel } from 'react-icons/md';
 
 import './SearchBox.scss';
 
+const defaultSearchValue = {
+  id: '',
+  name: '',
+  gender: 'all',
+};
+
 const SearchBox = ({ setShowSearchBox }) => {
-  const [employee, setEmployee] = useState({
-    id: '',
-    name: '',
-    gender: 'all',
-  });
+  const [employee, setEmployee] = useState(defaultSearchValue);
   const {
     findEmployeeById,
     findEmployeesByName,
@@ -41,7 +43,7 @@ const SearchBox = ({ setShowSearchBox }) => {
     }
 
     // Clear the input fields after the search
-    setEmployee({ id: '', name: '' });
+    setEmployee(defaultSearchValue);
   };
 
   return (
