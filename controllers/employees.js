@@ -73,7 +73,7 @@ exports.getEmployeesByName = async (req, res, next) => {
 };
 
 // Get employees be gender
-exports.getEmployeesByName = async (req, res, next) => {
+exports.getEmployeesByGender = async (req, res, next) => {
   try {
     const { gender } = req.params;
 
