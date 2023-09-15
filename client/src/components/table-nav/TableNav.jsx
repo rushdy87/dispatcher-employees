@@ -1,5 +1,6 @@
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useReactToPrint } from 'react-to-print';
 import { CSVLink } from 'react-csv';
 import {
   MdPersonAddAlt1,
@@ -14,8 +15,10 @@ import {
   JobTitleContext,
 } from '../../contexts';
 import './TableNav.scss';
+import { EmployeesTable } from '..';
 
-const TableNav = ({ setShowSearchBox }) => {
+const TableNav = ({ setShowSearchBox, componentToPrint }) => {
+  const componentRef = useRef();
   const { employees } = useContext(EmployeesContext);
   const { columns } = useContext(TableColumnsContext);
   const { degrees } = useContext(DegreesContext);
@@ -34,6 +37,10 @@ const TableNav = ({ setShowSearchBox }) => {
         return acc;
       }, {});
     return selectedColumns;
+  });
+
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
   });
   return (
     <>
@@ -61,11 +68,17 @@ const TableNav = ({ setShowSearchBox }) => {
               <MdSaveAlt />
             </CSVLink>
           </li>
-          <li className='table-nav-item'>
+          <li className='table-nav-item' onClick={handlePrint}>
             <span>طباعة</span>
             <MdPrint />
           </li>
         </ul>
+      </div>
+      <div className='printable-table' ref={componentRef}>
+        <h2>الاستلام والتجهيز</h2>
+        <div className='tab'>
+          <EmployeesTable printable={true} />
+        </div>
       </div>
     </>
   );

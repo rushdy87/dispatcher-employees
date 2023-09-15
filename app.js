@@ -68,9 +68,10 @@ sequelize
   });
 
 /*
-[
- 
- 
- 
-]
+// Change everyone without a last name to "Doe"
+await User.update({ lastName: "Doe" }, {
+  where: {
+    lastName: null,
+  },
+});
 */

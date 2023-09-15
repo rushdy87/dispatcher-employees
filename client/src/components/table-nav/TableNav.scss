@@ -39,3 +39,30 @@
     }
   }
 }
+
+.printable-table {
+  display: none;
+  h2 {
+    text-align: center;
+    margin: 20px;
+  }
+}
+
+/* Define styles for when printing */
+@media print {
+  @page {
+    size: A4; /* You can set the page size, orientation, and margins here */
+    margin: 2cm; /* Adjust margins as needed */
+  }
+
+  html,
+  body {
+    width: 210mm;
+    height: 297mm;
+  }
+
+  .printable-table {
+    display: block !important;
+    margin: 20px;
+  }
+}
