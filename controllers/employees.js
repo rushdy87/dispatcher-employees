@@ -64,6 +64,7 @@ exports.fetchByKey = async (req, res, next) => {
     const allowedParams = {
       name: Sequelize.STRING,
       degree: Sequelize.INTEGER,
+      job_title: Sequelize.INTEGER,
       gender: Sequelize.STRING, // Add 'gender' parameter here
       status: Sequelize.STRING, // Add 'status' parameter here
       // Add more allowed parameters as needed

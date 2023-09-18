@@ -5,6 +5,7 @@ import {
   EmployeesContext,
   TableColumnsContext,
   DegreesContext,
+  JobTitleContext,
 } from '../../contexts';
 import { renderJobTitles, renderDegrees } from '../../utils/rendering';
 
@@ -17,6 +18,7 @@ const defaultSearchValue = {
   gender: '',
   status: '',
   degree: '',
+  job_title: '',
 };
 
 const SearchBox = ({ setShowSearchBox }) => {
@@ -24,6 +26,7 @@ const SearchBox = ({ setShowSearchBox }) => {
   const { findEmployeeById, findEmployeesByKey } = useContext(EmployeesContext);
   const { columns, setColumns } = useContext(TableColumnsContext);
   const { degrees } = useContext(DegreesContext);
+  const { jobTitles } = useContext(JobTitleContext);
 
   const handleChange = (event) => {
     setEmployee((prev) => ({
@@ -105,6 +108,20 @@ const SearchBox = ({ setShowSearchBox }) => {
                   </option>
                   <option value='ملاك'>ملاك</option>
                   <option value='عقد'>عقد</option>
+                </select>
+              </div>
+              <div className='search-input'>
+                <label htmlFor='job_title'>العنوان الوظيفي</label>
+                <select
+                  name='job_title'
+                  id='job_title'
+                  value={employee.job_title}
+                  onChange={handleChange}
+                >
+                  <option value='all' defaultValue>
+                    الجميع
+                  </option>
+                  {renderJobTitles(jobTitles)}
                 </select>
               </div>
               <div className='search-input'>
