@@ -1,4 +1,5 @@
 const { Op } = require('sequelize');
+const Sequelize = require('sequelize');
 
 const Employees = require('../models/employees');
 
@@ -43,6 +44,59 @@ exports.createEmployee = async (req, res, next) => {
 exports.fetchAll = async (req, res, next) => {
   try {
     const employees = await Employees.findAll();
+
+    if (employees.length === 0) {
+      return res.status(404).json({ error: 'No Employee found' });
+    }
+
+    return handleResponse(res, null, employees);
+  } catch (error) {
+    return handleResponse(res, error);
+  }
+};
+
+// Fetch employees by key
+exports.fetchByKey = async (req, res, next) => {
+  try {
+    const query = req.query;
+
+    // Valid query parameters and their data types
+    const allowedParams = {
+      name: Sequelize.STRING,
+      degree: Sequelize.INTEGER,
+      gender: Sequelize.STRING, // Add 'gender' parameter here
+      status: Sequelize.STRING, // Add 'status' parameter here
+      // Add more allowed parameters as needed
+    };
+
+    // Validate and sanitize query parameters
+    const validatedQuery = {};
+    for (const key in query) {
+      if (allowedParams.hasOwnProperty(key)) {
+        const value = query[key];
+        const dataType = allowedParams[key];
+
+        // Perform data type conversion if needed
+        if (dataType === Sequelize.INTEGER) {
+          validatedQuery[key] = +value;
+        } else if (dataType === Sequelize.STRING) {
+          // Handle 'name' parameter with partial string match
+          if (key === 'name') {
+            validatedQuery[key] = { [Op.like]: `%${value}%` };
+          } else {
+            validatedQuery[key] = value;
+          }
+        }
+      }
+    }
+
+    console.log(validatedQuery);
+
+    // Perform the query using the validated query parameters
+    const employees = await Employees.findAll({
+      where: validatedQuery,
+      // Add pagination, sorting, and limiting options here if needed
+    });
 
     if (employees.length === 0) {
       return res.status(404).json({ error: 'No Employee found' });

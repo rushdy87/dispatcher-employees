@@ -1,24 +1,29 @@
 import { useContext, useState } from 'react';
-import { EmployeesContext, TableColumnsContext } from '../../contexts';
 import { MdCancel } from 'react-icons/md';
 
+import {
+  EmployeesContext,
+  TableColumnsContext,
+  DegreesContext,
+} from '../../contexts';
+import { renderJobTitles, renderDegrees } from '../../utils/rendering';
+
 import './SearchBox.scss';
+import { objectToQueryString } from '../../utils/api/api-helpers';
 
 const defaultSearchValue = {
   id: '',
   name: '',
-  gender: 'all',
+  gender: '',
+  status: '',
+  degree: '',
 };
 
 const SearchBox = ({ setShowSearchBox }) => {
   const [employee, setEmployee] = useState(defaultSearchValue);
-  const {
-    findEmployeeById,
-    findEmployeesByName,
-    findEmployeesByGender,
-    fetchAllEmployees,
-  } = useContext(EmployeesContext);
+  const { findEmployeeById, findEmployeesByKey } = useContext(EmployeesContext);
   const { columns, setColumns } = useContext(TableColumnsContext);
+  const { degrees } = useContext(DegreesContext);
 
   const handleChange = (event) => {
     setEmployee((prev) => ({
@@ -30,16 +35,11 @@ const SearchBox = ({ setShowSearchBox }) => {
   const handleSearch = (event) => {
     event.preventDefault();
 
-    if (employee.gender === 'all') {
-      if (employee.id && !employee.name) {
-        findEmployeeById(employee.id);
-      } else if (!employee.id && employee.name) {
-        findEmployeesByName(employee.name);
-      } else {
-        fetchAllEmployees();
-      }
+    if (employee.id) {
+      findEmployeeById(employee.id);
     } else {
-      findEmployeesByGender(employee.gender);
+      const query = objectToQueryString(employee);
+      findEmployeesByKey(query);
     }
 
     // Clear the input fields after the search
@@ -54,40 +54,73 @@ const SearchBox = ({ setShowSearchBox }) => {
       <form onSubmit={handleSearch}>
         <div className='search-form'>
           <div className='search-inputs'>
-            <div className='search-input'>
-              <label htmlFor='id'>رقم الحاسبة</label>
-              <input
-                type='number'
-                name='id'
-                id='id'
-                value={employee.id}
-                onChange={handleChange}
-              />
+            <div className='id-and-name'>
+              <div className='search-input'>
+                <label htmlFor='id'>رقم الحاسبة</label>
+                <input
+                  type='number'
+                  name='id'
+                  id='id'
+                  value={employee.id}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className='search-input'>
+                <label htmlFor='name'>الاسم</label>
+                <input
+                  type='text'
+                  name='name'
+                  id='name'
+                  value={employee.name}
+                  onChange={handleChange}
+                />
+              </div>
             </div>
-            <div className='search-input'>
-              <label htmlFor='name'>الاسم</label>
-              <input
-                type='text'
-                name='name'
-                id='name'
-                value={employee.name}
-                onChange={handleChange}
-              />
-            </div>
-            <div className='search-input'>
-              <label htmlFor='gender'>النوع</label>
-              <select
-                name='gender'
-                id='gender'
-                value={employee.gender}
-                onChange={handleChange}
-              >
-                <option value='all' defaultValue>
-                  الجميع
-                </option>
-                <option value='ذكر'>ذكر</option>
-                <option value='أنثى'>أنثى</option>
-              </select>
+            <div className='status-workday-degree'>
+              <div className='search-input'>
+                <label htmlFor='gender'>النوع</label>
+                <select
+                  name='gender'
+                  id='gender'
+                  value={employee.gender}
+                  onChange={handleChange}
+                >
+                  <option value='all' defaultValue>
+                    الجميع
+                  </option>
+                  <option value='ذكر'>ذكر</option>
+                  <option value='أنثى'>أنثى</option>
+                </select>
+              </div>
+              <div className='search-input'>
+                <label htmlFor='status'>الحالة الوظيفية</label>
+                <select
+                  name='status'
+                  id='status'
+                  value={employee.status}
+                  onChange={handleChange}
+                >
+                  <option value='all' defaultValue>
+                    الجميع
+                  </option>
+                  <option value='ملاك'>ملاك</option>
+                  <option value='عقد'>عقد</option>
+                </select>
+              </div>
+              <div className='search-input'>
+                <label htmlFor='degree'>الشهادة</label>
+                <select
+                  name='degree'
+                  id='degree'
+                  value={employee.degree}
+                  onChange={handleChange}
+                >
+                  <option value='all' defaultValue>
+                    الجميع
+                  </option>
+                  {renderDegrees(degrees)}
+                </select>
+              </div>
             </div>
           </div>
           <div className='columns-line'>

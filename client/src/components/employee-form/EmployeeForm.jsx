@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DegreesContext, JobTitleContext } from '../../contexts';
+import { renderJobTitles, renderDegrees } from '../../utils/rendering';
 import './EmployeeForm.scss';
 
 const defaultValue = {
@@ -30,21 +31,6 @@ const EmployeeForm = ({
   const { jobTitles } = useContext(JobTitleContext);
 
   const nav = useNavigate();
-
-  const renderJobTitles = jobTitles.map((jobTitle) => {
-    return (
-      <option key={jobTitle.id} value={jobTitle.id}>
-        {jobTitle.title_name}
-      </option>
-    );
-  });
-  const renderDegrees = degrees.map((degree) => {
-    return (
-      <option key={degree.id} value={degree.id}>
-        {degree.degree_name}
-      </option>
-    );
-  });
 
   const handleChange = (event) => {
     setEmployee((prev) => ({
@@ -142,7 +128,7 @@ const EmployeeForm = ({
                 value={employee.degree}
                 onChange={handleChange}
               >
-                {renderDegrees}
+                {renderDegrees(degrees)}
               </select>
             </div>
             <div className='input-field'>
@@ -153,7 +139,7 @@ const EmployeeForm = ({
                 value={employee.job_title}
                 onChange={handleChange}
               >
-                {renderJobTitles}
+                {renderJobTitles(jobTitles)}
               </select>
             </div>
           </div>

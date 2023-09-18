@@ -13,6 +13,9 @@ route.post('/newEmployees', employeesController.createEmployee);
 // GET /employees
 route.get('/', employeesController.fetchAll);
 
+// GET /employees/by-key/
+route.get('/by-key/q/', employeesController.fetchByKey);
+
 // GET /employees/:name
 route.get('/name/:name', employeesController.getEmployeesByName);
 

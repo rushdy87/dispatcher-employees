@@ -26,8 +26,24 @@
 
   .search-inputs {
     display: flex;
-    align-items: center;
-    justify-content: space-around;
+    flex-direction: column;
+    gap: 10px;
+
+    .id-and-name {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      width: 100%;
+    }
+
+    .status-workday-degree {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      width: 100%;
+    }
 
     .search-input {
       display: flex;

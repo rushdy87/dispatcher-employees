@@ -3,6 +3,7 @@ export {
   getAllEmployees,
   getEmployeesByName,
   getEmployeesByGender,
+  getEmployeesByKey,
   addEmployee,
   updateEmployee,
   deleteEmployee,

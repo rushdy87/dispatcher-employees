@@ -10,6 +10,11 @@ export const getAllEmployees = async () => {
   return makeApiRequest(url, 'GET');
 };
 
+export const getEmployeesByKey = async (query) => {
+  const url = `/employees/by-key/q/?${query}`;
+  return makeApiRequest(url, 'GET');
+};
+
 export const getEmployeesByName = async (name) => {
   const url = `/employees/name/${name}`;
   return makeApiRequest(url, 'GET');
