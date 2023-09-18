@@ -25,6 +25,7 @@ const EmployeeForm = ({
   employeeDetails,
   submitHandler,
   setEmployeeDetails,
+  setShowModel,
 }) => {
   const [employee, setEmployee] = useState(employeeDetails || defaultValue);
   const { degrees } = useContext(DegreesContext);
@@ -218,7 +219,7 @@ const EmployeeForm = ({
             className='btn_cancel'
             onClick={(event) => {
               event.preventDefault();
-              employeeDetails ? setEmployeeDetails(null) : nav('/');
+              employeeDetails ? setShowModel(false) : nav('/');
             }}
           >
             عودة

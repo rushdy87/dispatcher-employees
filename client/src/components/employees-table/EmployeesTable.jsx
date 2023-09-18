@@ -133,6 +133,7 @@ const EmployeesTable = ({ printable }) => {
               }
             }}
             setEmployeeDetails={setEmployeeDetails}
+            setShowModel={setShowModel}
           />
         </Model>
       )}
