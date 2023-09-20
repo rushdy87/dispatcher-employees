@@ -1,6 +1,6 @@
 import { makeApiRequest } from './api-helpers';
 
-export const getJobTitleById = async (id) => {
+export const getJobTitleById = (id) => {
   const url = `/job-titles/${id}`;
   return makeApiRequest(url, 'GET');
 };

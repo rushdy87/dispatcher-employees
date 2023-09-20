@@ -1,6 +1,8 @@
+import { dayInWritingMode } from '../../utils/rendering';
 import './DayOffPaper.scss';
 
-const DayOffPaper = () => {
+const DayOffPaper = ({ employee }) => {
+  console.log(employee);
   return (
     <div className='paper-container'>
       <div className='ref-name'>
@@ -11,31 +13,30 @@ const DayOffPaper = () => {
       <h1 className='paper-header'>استمارة طلب اجازة اعتيادية</h1>
       <div className='paper-date'>
         <span>
-          التاريخ: <span>01-01-2023</span>
+          التاريخ: <span>{employee.date}</span>
         </span>
       </div>
       <div className='paper-name-and-id'>
         <span>
-          الاسم: <span>فايا محمد حسام فيضي</span>
+          الاسم: <span>{employee.name}</span>
         </span>
         <span>
-          رقم الحاسبة: <span>11111</span>
+          رقم الحاسبة: <span>{employee.id}</span>
         </span>
       </div>
       <div className='paper-dep-and-job'>
         <span>القسم والشعبة: الإنتاج والتشغيل - الاستلام والتجهيز</span>
         <span>
-          العنوان الوظيفي <span>م. رئيس مبرمجين</span>
+          العنوان الوظيفي <span>{employee.job_title}</span>
         </span>
       </div>
       <div className='paper-days'>
         <span>
-          يرجى الموافقة على منحي اجازة اعتيادية لمدة:
-          <span>عشرة أيام</span>
+          يرجى الموافقة على منحي اجازة اعتيادية لمدة:{' '}
+          <span>{dayInWritingMode(employee.days)}</span> فقط
         </span>
         <span>
-          اعتبارا من تاريخ:
-          <span>01-01-2023</span>
+          اعتبارا من تاريخ: <span>{employee.from}</span>
         </span>
       </div>
       <div className='paper-signature'>

@@ -5,7 +5,7 @@ import './DayOff.scss';
 
 const DayOff = () => {
   const [employee, setEmployee] = useState({});
-  const [showModel, setShowModel] = useState(true);
+  const [showModel, setShowModel] = useState(false);
   return (
     <div>
       <DayOffForm setShowModel={setShowModel} setEmployee={setEmployee} />

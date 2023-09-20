@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 
-import { JobTitleContext } from '../../contexts';
+import { EmployeesContext, JobTitleContext } from '../../contexts';
 import { renderJobTitles } from '../../utils/rendering';
 
 import './DayOffForm.scss';
@@ -8,7 +8,7 @@ import './DayOffForm.scss';
 const defaultValue = {
   id: '',
   name: '',
-  jobTitles: '',
+  job_title: 1,
   date: new Date().toISOString().split('T')[0],
   from: new Date().toISOString().split('T')[0],
   days: 1,
@@ -18,6 +18,9 @@ const DayOffForm = ({ setShowModel, setEmployee }) => {
   const [values, setValues] = useState(defaultValue);
 
   const { jobTitles } = useContext(JobTitleContext);
+  const { employees } = useContext(EmployeesContext);
+
+  const getJobTitleById = (id) => jobTitles.find((t) => t.id === id);
 
   const handleChange = (event) => {
     setValues((prev) => ({
@@ -26,9 +29,29 @@ const DayOffForm = ({ setShowModel, setEmployee }) => {
     }));
   };
 
+  const handleIdChange = (event) => {
+    const findedEmployee = employees.find(
+      (employee) => employee.id === +event.target.value
+    );
+    if (findedEmployee) {
+      setValues((prev) => ({
+        ...prev,
+        ...findedEmployee,
+      }));
+    } else {
+      setValues((prev) => ({
+        ...prev,
+        id: event.target.value,
+      }));
+    }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    setEmployee(values);
+    setEmployee({
+      ...values,
+      job_title: getJobTitleById(+values.job_title)?.title_name,
+    });
     setShowModel(true);
   };
 
@@ -52,16 +75,36 @@ const DayOffForm = ({ setShowModel, setEmployee }) => {
           <div className='day-off-form-id-and-name'>
             <div className='day-off-form-input-field'>
               <label htmlFor='id'>رقم الحاسبة</label>
-              <input type='number' name='id' id='id' required />
+              <input
+                type='number'
+                name='id'
+                id='id'
+                value={values.id}
+                onChange={handleIdChange}
+                required
+              />
             </div>
             <div className='day-off-form-input-field'>
               <label htmlFor='name'>الاسم</label>
-              <input type='text' name='name' id='name' />
+              <input
+                type='text'
+                name='name'
+                id='name'
+                value={values.name}
+                onChange={handleChange}
+                required
+              />
             </div>
           </div>
           <div className='day-off-form-input-field'>
             <label htmlFor='job_title'>العنوان الوظيفي</label>
-            <select name='job_title' id='job_title'>
+            <select
+              name='job_title'
+              id='job_title'
+              value={values.job_title}
+              onChange={handleChange}
+              required
+            >
               {renderJobTitles(jobTitles)}
             </select>
           </div>
@@ -73,22 +116,30 @@ const DayOffForm = ({ setShowModel, setEmployee }) => {
               id='date'
               value={values.date}
               onChange={handleChange}
+              required
             />
           </div>
           <div className='day-off-form-from-and-days'>
             <div className='day-off-form-input-field'>
-              <label htmlFor='from'>التاريخ</label>
+              <label htmlFor='from'>اعتبارا من: </label>
               <input
                 type='date'
                 name='from'
                 id='from'
                 value={values.from}
                 onChange={handleChange}
+                required
               />
             </div>
             <div className='day-off-form-input-field'>
               <label htmlFor='days'>عدد الأيام</label>
-              <select name='days' id='days'>
+              <select
+                name='days'
+                id='days'
+                value={values.days}
+                onChange={handleChange}
+                required
+              >
                 {renderDays()}
               </select>
             </div>
