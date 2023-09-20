@@ -1,0 +1,59 @@
+@use '../../base.scss';
+.day-off-form-container {
+  display: flex;
+  flex-direction: column;
+
+  .day-off-form-header {
+    font-size: 2em;
+    font-weight: 900;
+    text-align: center;
+  }
+
+  .day-off-form-form {
+    form {
+      display: flex;
+      flex-direction: column;
+
+      .day-off-form-id-and-name {
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+      }
+
+      .day-off-form-input-field,
+      .day-off-form-from-and-days {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        margin: 20px;
+
+        font-size: 1.2em;
+
+        input {
+          height: 30px;
+          width: 340px;
+          border: 1px solid base.$fb-primary-color;
+          border-radius: 6px;
+
+          &[type='number'] {
+            width: 120px;
+          }
+          &[type='date'] {
+            width: 160px;
+          }
+        }
+        select {
+          font-size: 1em;
+          height: 30px;
+          width: 140px;
+          border: 1px solid base.$fb-primary-color;
+          border-radius: 6px;
+        }
+      }
+
+      .day-off-form-btn {
+        margin: 30px auto;
+      }
+    }
+  }
+}

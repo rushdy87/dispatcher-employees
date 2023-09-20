@@ -19,7 +19,7 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <Link to='/'>
+          <Link to='/day-off'>
             <div className='sidebar-link'>
               <span className='sidebar-icon'>
                 <VscGitPullRequestGoToChanges />
@@ -39,7 +39,7 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <Link to='/'>
+          <Link to='/add-degree'>
             <div className='sidebar-link'>
               <span className='sidebar-icon'>
                 <PiStudent />

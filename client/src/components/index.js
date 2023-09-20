@@ -5,3 +5,5 @@ export { default as EmployeesTable } from './employees-table/EmployeesTable';
 export { default as TablePagination } from './table-pagination/TablePagination';
 export { default as EmployeeForm } from './employee-form/EmployeeForm';
 export { default as Model } from './model/Model';
+export { default as DayOffForm } from './day-off-form/DayOffForm';
+export { default as DayOffPaper } from './day-off-paper/DayOffPaper';
