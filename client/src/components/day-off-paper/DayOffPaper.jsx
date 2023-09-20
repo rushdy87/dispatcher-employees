@@ -2,7 +2,6 @@ import { dayInWritingMode } from '../../utils/rendering';
 import './DayOffPaper.scss';
 
 const DayOffPaper = ({ employee }) => {
-  console.log(employee);
   return (
     <div className='paper-container'>
       <div className='ref-name'>
